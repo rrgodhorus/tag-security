@@ -51,9 +51,7 @@ use the table below as an example:
 
 ## Overview
 
-One or two sentences describing the project -- something memorable and accurate
-that distinguishes your project to quickly orient readers who may be assessing
-multiple projects.
+External Secrets is a management system that helps store data safely outside the Kubernetes cluster. It helps external secret management systems like Hashicorp or AWS handle the entire secret lifestyle management. It allows users to store secrets in a secure, centralized location and then access them from your applications in a secure and controlled way.
 
 ### Background
 
