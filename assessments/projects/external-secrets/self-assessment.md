@@ -55,8 +55,9 @@ External Secrets is a management system that helps store data safely outside the
 
 ### Background
 
-Provide information for reviewers who may not be familiar with your project's
-domain or problem area.
+Kubernetes Secrets are objects that contain sensitive information or data like a password or OAuth tokens. Secrets give you more control over how sensitive information is used and reduces the risk of accidental exposure. Secret values are encoded as base64 strings and are stored unencrypted by default, but can be configured to be encrypted at rest. 
+External Secrets is an operator for secrets. It takes secrets from external secret management systems, like AWS Secret Manager and turns them into Kubernetes Secrets.. Kubernetes is an open source platform designed to make containerizing applications more simple. Managing secrets in Kubernetes is a long gruesome process. External Secrets can help mitigate security risks, simplify secret distribution, and simplify secret rotations which ensures security is being maintained.
+
 
 ### Actors
 These are the individual parts of your system that interact to provide the 
@@ -81,9 +82,8 @@ access, and then returns a token to the client.  The client then transmits that
 token to the file server, which, after confirming its validity, returns the file.
 
 ### Goals
-The intended goals of the projects including the security guarantees the project
- is meant to provide (e.g., Flibble only allows parties with an authorization
-key to change data it stores).
+External secrets seeks to make the user's experience with managing secrets more efficient and secure. It synchronizes secrets from external locations such as an API, and into kubernetes. It allows for secrets to be injected into applications directly.
+
 
 ### Non-goals
 Non-goals that a reasonable reader of the project’s literature could believe may
