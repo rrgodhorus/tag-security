@@ -1,15 +1,4 @@
-# Self-assessment
-The Self-assessment is the initial document for projects to begin thinking about the
-security of the project, determining gaps in their security, and preparing any security
-documentation for their users. This document is ideal for projects currently in the
-CNCF **sandbox** as well as projects that are looking to receive a joint assessment and
-currently in CNCF **incubation**.
-
-For a detailed guide with step-by-step discussion and examples, check out the free 
-Express Learning course provided by Linux Foundation Training & Certification: 
-[Security Assessments for Open Source Projects](https://training.linuxfoundation.org/express-learning/security-self-assessments-for-open-source-projects-lfel1005/).
-
-# Self-assessment outline
+# Self-assessment for External Secrets Operator
 
 ## Table of contents
 
@@ -37,7 +26,7 @@ A table at the top for quick reference information, later used for indexing.
 | Software | [A link to the External-Secret's repository.] (https://github.com/external-secrets/external-secrets) |
 | Security Provider | No - Facilitator of security |
 | Languages | Go, HCL, Makefile, Shell, Smarty, Dockerfile |
-| SBOM |SBOM generated using **FOSSA-cli** tool on the latest code base. [Link to SBOM](https://github.com/rrgodhorus/tag-security/blob/ab10047/assessments/projects/external-secrets/docs/external_secrets_sbom.spdx.json)  |
+| SBOM | SBOM generated using **FOSSA-cli** tool on the latest code base. [Link to SBOM](./docs/REPORT_external-secrets_2023-11-27_193318345Z.spdx.json) |
 | | |
 
 ### Security links
