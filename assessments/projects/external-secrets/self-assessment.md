@@ -117,34 +117,62 @@ included in threat modeling.
 
 ## Secure development practices
 
-* Development Pipeline.  A description of the testing and assessment processes that
-  the software undergoes as it is developed and built. Be sure to include specific
-information such as if contributors are required to sign commits, if any container
-images immutable and signed, how many reviewers before merging, any automated checks for
-vulnerabilities, etc.
-* Communication Channels. Reference where you document how to reach your team or
-  describe in corresponding section.
-  * Internal. How do team members communicate with each other?
-  * Inbound. How do users or prospective users communicate with the team?
-  * Outbound. How do you communicate with your users? (e.g. flibble-announce@
-    mailing list)
-* Ecosystem. How does your software fit into the cloud native ecosystem?  (e.g.
-  Flibber is integrated with both Flocker and Noodles which covers
-virtualization for 80% of cloud users. So, our small number of "users" actually
-represents very wide usage across the ecosystem since every virtual instance uses
-Flibber encryption by default.)
+ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best practices badge
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/5947/badge)](https://www.bestpractices.dev/projects/5947). The project is working on receiving a silver badge and is in the process of meeting the criteria for it.
+
+### Development Pipeline
+
+* All source code is publicly maintained in [GitHub](https://github.com/external-secrets/external-secrets).
+* Code changes are submitted via Pull Requests (PRs) and must be reviewed and approved by atleast one maintainer.
+* Commits to the `main` branch are merged only when a PR is approved and passes all checks.
+* Once a pull request has been opened it will be assigned to a reviewer from external-secrets/maintainers.
+* ESO uses the Github Bot [Paul the Alien](https://github.com/apps/paul-the-alien) (which is still in Alpha) to store the list of maintainers, to approve/merge PRs and to delete branches after PR merges.
+* Raising a PR triggers a series of github actions and workflows whose component checks are broken down below:
+  * [Sonar Cloud Quality Gate](https://sonarcloud.io/project/issues?id=external-secrets_external-secrets) check initiated by the sonarcloud bot which checks for bugs, vulenrabilities, security hotspots, code smells, code coverage and duplication
+  * Developer Certificate of Origin (DCO) check to verify commits are signed correctly
+  * Detect noop ([skip-duplicate-actions](https://github.com/fkirc/skip-duplicate-actions)) 
+  * Linting check
+  * Diff check
+  * Unit tests
+  * E2E tests
+  * Dependency License Checks (FOSSA)
+  * Building the image
+  * Image scanning for vulnerabilities using Trivy
+  * Create SBOM & provenance files and sign the image
+  * Pubish signed artifacts to Dockerhub
+
+### Communication Channels
+* Referenced in docs under [How to Get Involved](https://external-secrets.io/latest/#how-to-get-involved) and described below:
+  * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
+  * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
+  * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
+  * [Twitter](https://twitter.com/ExtSecretsOptr)
+* Relevant but not mentioned in the docs:
+  * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
+  * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
+* Technical Support policy detailed in [docs/stability-support](https://external-secrets.io/latest/introduction/stability-support/#technical-support)
+
+### Ecosystem
+* ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). We can expect the services that used kubernetes-external-secrets to migrate to ESO.
+* ESO also maintains an official list of its [Adopters](https://github.com/external-secrets/external-secrets/blob/main/ADOPTERS.md). 
 
 ## Security issue resolution
+ESO's security policy can be found in [SECURITY.md](https://github.com/external-secrets/external-secrets/blob/main/SECURITY.md).
 
-* Responsible Disclosures Process. A outline of the project's responsible
-  disclosures process should suspected security issues, incidents, or
-vulnerabilities be discovered both external and internal to the project. The
-outline should discuss communication methods/strategies.
-  * Vulnerability Response Process. Who is responsible for responding to a
-    report. What is the reporting process? How would you respond?
-* Incident Response. A description of the defined procedures for triage,
-  confirmation, notification of vulnerability or security incident, and
-patching/update availability.
+### Responsible Disclosures Process
+* ESO specifies that any security vulnerability found should be sent as a confidential email to contact@external-secrets.io and not be reported as an Issue.
+### Vulnerability Management Plans
+* ESO uses Github Security Alerts and Dependabot Dependency Updates to learn about critical software updates and security threats.
+### Vulnerability Response Process
+* No specific information on this is provided in the security file currently.
+* Recommendation:
+  * Dedicated email for reporting security bugs/vulnerabilities that is monitored 24x7.
+  * Acknowledgement email to reporter within a reasonable time span once the process it started.
+  * Information on maintainers who are charged with responding to security events (in case an immediate response is required).
+  * Include specific timeline/procedures to assign resources and fix a reported vulnerability.
+### Incident Response
+* Since this project does not directly handle any customer data, any users who experience an incident will report a vulnerability.
+
 
 ## Appendix
 
