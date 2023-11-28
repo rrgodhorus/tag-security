@@ -21,8 +21,7 @@
 
 A table at the top for quick reference information, later used for indexing.
 
-|   |  |
-| -- | -- |
+
 | Software | [A link to the External-Secret's repository.] (https://github.com/external-secrets/external-secrets) |
 | Security Provider | No - Facilitator of security |
 | Languages | Go, HCL, Makefile, Shell, Smarty, Dockerfile |
@@ -127,7 +126,7 @@ This document provides the CNCF TAG-Security with an initial understanding of ex
 
 ## Project compliance
 
-* Compliance.  List any security standards or sub-sections the project is
+* Compliance.  List any security standards or subsections the project is
   already documented as meeting (PCI-DSS, COBIT, ISO, GDPR, etc.).
 
 ## Secure development practices
@@ -138,12 +137,12 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
 ### Development Pipeline
 
 * All source code is publicly maintained in [GitHub](https://github.com/external-secrets/external-secrets).
-* Code changes are submitted via Pull Requests (PRs) and must be reviewed and approved by atleast one maintainer.
+* Code changes are submitted via Pull Requests (PRs) and must be reviewed and approved by at least one maintainer.
 * Commits to the `main` branch are merged only when a PR is approved and passes all checks.
 * Once a pull request has been opened it will be assigned to a reviewer from external-secrets/maintainers.
-* ESO uses the Github Bot [Paul the Alien](https://github.com/apps/paul-the-alien) (which is still in Alpha) to store the list of maintainers, to approve/merge PRs and to delete branches after PR merges.
-* Raising a PR triggers a series of github actions and workflows whose component checks are broken down below:
-  * [Sonar Cloud Quality Gate](https://sonarcloud.io/project/issues?id=external-secrets_external-secrets) check initiated by the sonarcloud bot which checks for bugs, vulenrabilities, security hotspots, code smells, code coverage and duplication
+* ESO uses the GitHub Bot [Paul the Alien](https://github.com/apps/paul-the-alien) (which is still in Alpha) to store the list of maintainers, to approve/merge PRs and to delete branches after PR merges.
+* Raising a PR triggers a series of GitHub actions and workflows whose component checks are broken down below:
+  * [Sonar Cloud Quality Gate](https://sonarcloud.io/project/issues?id=external-secrets_external-secrets) check initiated by the sonarcloud bot which checks for bugs, vulnerabilities, security hotspots, code smells, code coverage and duplication
   * Developer Certificate of Origin (DCO) check to verify commits are signed correctly
   * Detect noop ([skip-duplicate-actions](https://github.com/fkirc/skip-duplicate-actions))
   * Linting check
@@ -154,18 +153,21 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
   * Building the image
   * Image scanning for vulnerabilities using Trivy
   * Create SBOM & provenance files and sign the image
-  * Pubish signed artifacts to Dockerhub
+  * Publish signed artifacts to Dockerhub
 
 ### Communication Channels
 * Referenced in docs under [How to Get Involved](https://external-secrets.io/latest/#how-to-get-involved) and described below:
-  * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
-  * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
-  * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
-  * [Twitter](https://twitter.com/ExtSecretsOptr)
-* Relevant but not mentioned in the docs:
-  * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
-  * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
-* Technical Support policy detailed in [docs/stability-support](https://external-secrets.io/latest/introduction/stability-support/#technical-support)
+  * Internal:
+    * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
+    * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
+    * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
+    * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
+  * Inbound:
+    * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
+    * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
+    * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
+  * Outbound:
+    * [Twitter](https://twitter.com/ExtSecretsOptr)
 
 ### Ecosystem
 * ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). We can expect the services that used kubernetes-external-secrets to migrate to ESO.
@@ -177,7 +179,7 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 ### Responsible Disclosures Process
 * ESO specifies that any security vulnerability found should be sent as a confidential email to contact@external-secrets.io and not be reported as an Issue.
 ### Vulnerability Management Plans
-* ESO uses Github Security Alerts and Dependabot Dependency Updates to learn about critical software updates and security threats.
+* ESO uses GitHub Security Alerts and Dependabot Dependency Updates to learn about critical software updates and security threats.
 ### Vulnerability Response Process
 * No specific information on this is provided in the security file currently.
 * Recommendation:
@@ -202,4 +204,4 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
   real-world use cases.
 * Related Projects / Vendors. Reflect on times prospective users have asked
   about the differences between your project and projectX. Reviewers will have
-  the same question.the same question.
+  the same question.
