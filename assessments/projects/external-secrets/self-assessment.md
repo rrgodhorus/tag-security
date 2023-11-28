@@ -81,7 +81,7 @@ The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely-
 
 ### Goals
     
-  #### 1.Secure Secret Management
+  #### 1. Secure Secret Management
   ESO's primary goal is to securely manage secrets within Kubernetes by leveraging external secret management systems. It ensures that sensitive information like API keys, passwords, and tokens are stored and managed in systems specifically designed for this purpose, offering robust security features.
 
   #### 2. Automated Synchronization
@@ -119,15 +119,17 @@ This document provides the CNCF TAG-Security with an initial understanding of ES
 
 ## Security functions and features
 
-* Critical.  A listing critical security components of the project with a brief
-description of their importance.  It is recommended these be used for threat modeling.
-These are considered critical design elements that make the product itself secure and
-are not configurable.  Projects are encouraged to track these as primary impact items
-for changes to the project.
-* Security Relevant.  A listing of security relevant components of the project with
-  brief description.  These are considered important to enhance the overall security of
-the project, such as deployment configurations, settings, etc.  These should also be
-included in threat modeling.
+### Critical Components
+* Authentication and Authorization Interface: Connects with external secret management systems; ensures only authenticated and authorized access to secrets.
+* Secret Synchronization Mechanism: Securely transfers secrets from external systems to Kubernetes, critical for maintaining the confidentiality and integrity of secret data.
+* Kubernetes Secrets Management: Handles the creation and updating of Kubernetes Secrets, a fundamental aspect of ensuring that only authorized Kubernetes workloads can access the synchronized secrets.
+
+### Security Relevant Components.
+* Configuration of Secret Stores: Involves setting up SecretStore and ClusterSecretStore resources, impacting how securely ESO interacts with external systems.
+* Role-Based Access Control (RBAC) Configuration: Determines what resources within Kubernetes the ESO can access, significantly affecting the isolation and security of the secrets.
+* Network Policies: Governs the network traffic to and from ESO, relevant for preventing unauthorized network access.
+
+### [Threat Modeling with STRIDE](#external-secrets-operator-threat-modeling)
 
 ## Project compliance
 
@@ -216,3 +218,25 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 * Kubernetes External Secrets (deprecated): [kubernetes-external-secrets](https://github.com/external-secrets/kubernetes-external-secrets) is the original project kicked off by Godaddy while external-secrets is the newer one that replaced it. According to the team, KES does not have any dedicated or active maintainers at this time and is on limited life support. There were tech debts in the project that were causing issues and some of the dependencies they depended on are no longer maintained. To replace them would have required a sizeable effort. Also, KES was originally written in Javascript and the newer ESO is written in the more Kubernetes friendly Golang. There is a [tool](https://github.com/external-secrets/kes-to-eso) available to migrate from KES to ESO.
 
 * CSI Secret Store - Integrates secrets stores with Kubernetes via a Container Storage Interface (CSI) volume. The Secrets Store CSI Driver `secrets-store.csi.k8s.io` allows Kubernetes to mount multiple secrets, keys, and certs stored in enterprise-grade external secrets stores into their pods as a volume. Once the Volume is attached, the data in it is mounted into the container’s file system. The differences between ESO and CSI Secret Store them are documented in this issue [comment](https://github.com/external-secrets/external-secrets/issues/478#issuecomment-964413129).
+
+### External Secrets Operator Threat Modeling
+
+ESO has a threat-model documented at [threat-model](https://external-secrets.io/latest/guides/threat-model/).
+
+We're also providing our own threat modeling using STRIDE below:
+
+#### Spoofing
+
+
+#### Tampering
+
+#### Repudiation
+
+#### Information Disclosure
+
+#### Denial of Service (DoS)
+
+#### Elevation of Privilege
+
+
+
