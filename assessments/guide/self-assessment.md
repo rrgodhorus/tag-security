@@ -170,4 +170,4 @@ record in catching issues in code review or automated testing.
   real-world use cases.
 * Related Projects / Vendors. Reflect on times prospective users have asked
   about the differences between your project and projectX. Reviewers will have
-  the same question.
+the same question.
