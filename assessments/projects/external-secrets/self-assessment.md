@@ -161,10 +161,14 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
 
 ### Communication Channels
 * Referenced in docs under [How to Get Involved](https://external-secrets.io/latest/#how-to-get-involved) and described below:
-  * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
-  * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
-  * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
-  * [Twitter](https://twitter.com/ExtSecretsOptr)
+  * Internal  
+    * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
+    * [Kubernetes Slack: #external-secrets channel]
+    * (https://kubernetes.slack.com/messages/external-secrets)
+  * Inbound
+    * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
+  * Outbound
+    * [Twitter](https://twitter.com/ExtSecretsOptr)
 * Relevant but not mentioned in the docs:
   * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
   * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
