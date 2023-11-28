@@ -226,7 +226,7 @@ A few general use cases are available below:
 * Use Case 2: Rotating secrets for security
 
   It is important to rotate secrets regularly to prevent unauthorized access. However, manually rotating secrets can be time-consuming and error-prone. ESO can be used to automate the rotation of secrets. ESO can be configured to fetch secrets from an external source, such as AWS Secrets Manager or HashiCorp Vault, and then store them in Kubernetes secrets. ESO can also be configured to rotate secrets on a regular basis.
-  
+
 * Use Case 3: Accessing secrets from multiple sources
 
   A company may use multiple sources for their secrets, such as AWS Secrets Manager, HashiCorp Vault, and a custom secrets store. ESO can be used to access secrets from all of these sources. ESO can be configured to use different secret providers for different types of secrets. For example, ESO could be configured to use AWS Secrets Manager for database credentials and HashiCorp Vault for API keys.
@@ -317,33 +317,25 @@ Currently, ESO generates an X.509 certificate for webhook registration without a
 * Implement Rate Limiting: Introduce rate limiting on the webhook to prevent it from being overwhelmed by excessive requests.
 * Network Security: Strengthen network security policies to restrict access to the webhook Pod, ensuring that only authorized traffic can reach it.
 
-##### Threat-09-D - DDoS attacks on external secret stores
-DDoS attacks on external secret stores can overwhelm these services, potentially disrupting their availability. This can impact the External Secrets Operator's ability to synchronize secrets, affecting services that rely on these secrets.
-
-##### Threat-09-D Recommended Mitigations
-* DDoS Protection Services: Utilizing DDoS protection services offered by cloud providers or third-party security firms can help mitigate the risk. These services typically include traffic filtering, rate limiting, and anomaly detection to identify and block malicious traffic.
-* Resilience and Redundancy: Implementing resilience strategies like load balancing and failover systems ensures that even in the event of a DDoS attack, the secret store remains available. This might include distributing the secret storage across multiple data centers or cloud regions.
-* Monitoring and Incident Response: Continuous monitoring for unusual traffic patterns and having a robust incident response plan in place ensures that any DDoS attack can be quickly identified and addressed.
-
-#### Threat-10-D - Man-in-the-Middle (MITM) attack
+##### Threat-09-D - Man-in-the-Middle (MITM) attack
 An adversary could launch a Man-in-the-Middle (MITM) attack to hijack the webhook pod, enabling them to manipulate the data of the conversion webhook. This could involve injecting malicious resources or causing a Denial-of-Service (DoS) attack.
 
-##### Threat-10-D Recommended Mitigations
+##### Threat-09-D Recommended Mitigations
 To mitigate this threat, a mutual authentication mechanism should be enforced for the connection between the Kubernetes API server and the webhook service to ensure that only authenticated endpoints can communicate.
 
 #### Elevation of Privilege
 
-##### Threat-11-E - Exploiting Vulnerabilities for Higher Privileges:
+##### Threat-10-E - Exploiting Vulnerabilities for Higher Privileges:
 Attackers might identify and exploit existing vulnerabilities in the External Secrets Operator (ESO) or the Kubernetes environment. These vulnerabilities could range from software bugs to insecure configurations, allowing attackers to gain unauthorized access or control.
 
-##### Threat-11-E Recommended Mitigations
+##### Threat-10-E Recommended Mitigations
 * Perform regular updates and apply patches to both ESO and Kubernetes, addressing known security issues.
 * Continuously monitor for new vulnerabilities and apply security patches as soon as they are released.
 
-##### Threat-12-E -  Insufficiently Restricted User Roles
+##### Threat-11-E -  Insufficiently Restricted User Roles
 In this scenario, users or attackers exploit overly permissive or poorly configured RBAC (Role-Based Access Control) policies in Kubernetes. This can lead to unauthorized access elevation, potentially giving attackers control over sensitive operations or data.
 
-##### Threat-12-E Recommended Mitigations
+##### Threat-11-E Recommended Mitigations
 * Implement and enforce strict RBAC policies, ensuring each role is granted only the minimum necessary permissions.
 * Regularly review and audit RBAC configurations to detect and correct any excess permissions, ensuring they align with the principle of least privilege.
-* Train administrators and users on the importance of secure role configuration and management.
+* Document security best practices for administrators and users on the importance of secure role configuration and management.
