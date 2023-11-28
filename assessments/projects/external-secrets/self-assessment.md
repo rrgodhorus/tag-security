@@ -16,13 +16,14 @@
 * [Secure development practices](#secure-development-practices)
 * [Security issue resolution](#security-issue-resolution)
 * [Appendix](#appendix)
+* [Threat Modeling with STRIDE](#external-secrets-operator-threat-modeling)
 
 ## Metadata
 
 |   |  |
 | -- | -- |
 | Software | A link to the External-Secret Operator's repository: [external-secrets](https://github.com/external-secrets/external-secrets) |
-| Security Provider | No - ESO does not handle secret creation by itself |
+| Security Provider | No  - Primary function is to sync passwords from external secret store to k8 clusters.|
 | Languages | Go, HCL, Makefile, Shell, Smarty, Dockerfile |
 | SBOM | SBOM generated using **FOSSA-cli** tool on the latest code base. [Link to SBOM](./docs/REPORT_external-secrets_2023-11-27_193318345Z.spdx.json) |
 | | |
@@ -46,67 +47,71 @@ The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely-
 ### Actors
 
 #### 1. External Secret Management Systems
-- Examples: AWS Secrets Manager, HashiCorp Vault.
-- Isolation: Network boundaries and authentication mechanisms separate these from the Kubernetes cluster.
-- Security Note: A breach in these systems does not directly compromise the Kubernetes cluster.
+* Examples: AWS Secrets Manager, HashiCorp Vault.
+* Isolation: Network boundaries and authentication mechanisms separate these from the Kubernetes cluster.
+* Security Note: A breach in these systems does not directly compromise the Kubernetes cluster.
 
 #### 2. Kubernetes Cluster (including ESO)
-- Role: ESO bridges Kubernetes and external secret systems.
-- Isolation: Kubernetes Role-Based Access Control (RBAC) limits potential lateral movement in case of a compromise.
+* Role: ESO bridges Kubernetes and external secret systems.
+* Isolation: Kubernetes Role-Based Access Control (RBAC) limits potential lateral movement in case of a compromise.
 
 #### 3. Kubernetes Secrets
-- Function: Store synchronized secrets within the cluster via ESO.
-- Isolation: Kubernetes namespaces and access policies provide compartmentalization.
-- Security Note: A compromise in one namespace doesn’t necessarily expose secrets in another.
+* Function: Store synchronized secrets within the cluster via ESO.
+* Isolation: Kubernetes namespaces and access policies provide compartmentalization.
+* Security Note: A compromise in one namespace doesn’t necessarily expose secrets in another.
 
-  ##### Isolation Mechanisms Overview
-  - The isolation between these actors relies on network security, access control mechanisms, and the principle of least privilege.
-  - This architecture ensures a limited scope of breach, even if one part is compromised.
+#### Isolation Mechanisms Overview
+* The isolation between these actors relies on network security, access control mechanisms, and the principle of least privilege.
+* This architecture ensures a limited scope of breach, even if one part is compromised.
 
 ### Actions
-  For the External Secrets Operator (ESO), the steps it performs to synchronize secrets from external sources into Kubernetes can be outlined focusing on security checks, data handling, and interactions:
+The actions performed by ESO to synchronize secrets from external sources into Kubernetes can be outlined focusing on security checks, data handling, and interactions:
 
-  #### 1. Client Request to External Secret Management System
-  ESO, acting as a client, sends a request to an external secret management system (like AWS Secrets Manager). This request includes authentication and authorization checks to ensure that ESO is permitted to access the requested secrets.
-  #### 2. Retrieval of Secrets
-  Upon successful authentication and authorization, the external system sends the requested secrets to ESO. These secrets are transmitted over secure, encrypted channels to ensure their confidentiality and integrity.
-  #### 3. Validation and Transformation
-  ESO validates the format and integrity of the received secrets. If necessary, it transforms the data to a format compatible with Kubernetes Secrets.
-  #### 4. Synchronization to Kubernetes Secrets
-  ESO then creates or updates Kubernetes Secret objects with the retrieved data. This step involves interacting with the Kubernetes API server, which includes RBAC checks to ensure that ESO has the necessary permissions to perform these operations.
-  #### 5. Use by Kubernetes Workloads
-  Applications or workloads running in Kubernetes can then access these secrets. Access to these secrets within Kubernetes is controlled by namespace-specific policies and RBAC, ensuring that only authorized workloads can retrieve them.
+#### 1. Client Request to External Secret Management System
+ESO, acting as a client, sends a request to an external secret management system (like AWS Secrets Manager). This request includes authentication and authorization checks to ensure that ESO is permitted to access the requested secrets.
 
-  Overall, ESO's goal is to provide a secure, efficient, and reliable way of managing secrets in Kubernetes environments, ensuring that only authorized entities have access to sensitive data and that this data is handled securely at all times.
+#### 2. Retrieval of Secrets
+Upon successful authentication and authorization, the external system sends the requested secrets to ESO. These secrets are transmitted over secure, encrypted channels to ensure their confidentiality and integrity.
+
+#### 3. Validation and Transformation
+ESO validates the format and integrity of the received secrets. If necessary, it transforms the data to a format compatible with Kubernetes Secrets.
+
+#### 4. Synchronization to Kubernetes Secrets
+ESO then creates or updates Kubernetes Secret objects with the retrieved data. This step involves interacting with the Kubernetes API server, which includes RBAC checks to ensure that ESO has the necessary permissions to perform these operations.
+
+#### 5. Use by Kubernetes Workloads
+Applications or workloads running in Kubernetes can then access these secrets. Access to these secrets within Kubernetes is controlled by namespace-specific policies and RBAC, ensuring that only authorized workloads can retrieve them.
+
+Overall, ESO's goal is to provide a secure, efficient, and reliable way of managing secrets in Kubernetes environments, ensuring that only authorized entities have access to sensitive data and that this data is handled securely at all times.
 
 ### Goals
     
-  #### 1. Secure Secret Management
-  ESO's primary goal is to securely manage secrets within Kubernetes by leveraging external secret management systems. It ensures that sensitive information like API keys, passwords, and tokens are stored and managed in systems specifically designed for this purpose, offering robust security features.
+#### 1. Secure Secret Management
+ESO's primary goal is to securely manage secrets within Kubernetes by leveraging external secret management systems. It ensures that sensitive information like API keys, passwords, and tokens are stored and managed in systems specifically designed for this purpose, offering robust security features.
 
-  #### 2. Automated Synchronization
-  ESO automates the synchronization of secrets from these external systems into Kubernetes, ensuring that applications always have access to the latest version of each secret.
+#### 2. Automated Synchronization
+ESO automates the synchronization of secrets from these external systems into Kubernetes, ensuring that applications always have access to the latest version of each secret.
 
-  #### 3. Access Control
-  By integrating with external secret managers, ESO inherits and enforces their access control mechanisms. It guarantees that only authorized parties can retrieve or modify the secrets, both in the external systems and when they are injected into Kubernetes.
+#### 3. Access Control
+By integrating with external secret managers, ESO inherits and enforces their access control mechanisms. It guarantees that only authorized parties can retrieve or modify the secrets, both in the external systems and when they are injected into Kubernetes.
 
-  #### 4. Encryption and Integrity
-  ESO ensures that the transmission of secrets from external systems to Kubernetes is secure, maintaining the confidentiality and integrity of the data throughout the process.
+#### 4. Encryption and Integrity
+ESO ensures that the transmission of secrets from external systems to Kubernetes is secure, maintaining the confidentiality and integrity of the data throughout the process.
 
 
 ### Non-goals
 
-  #### 1. Secret Data Encryption
-  While ESO manages encrypted secrets, it does not provide encryption services itself. The actual encryption and decryption are handled by the external secret management systems.
+#### 1. Secret Data Encryption
+While ESO manages encrypted secrets, it does not provide encryption services itself. The actual encryption and decryption are handled by the external secret management systems.
 
-  #### 2. Intrusion Detection or Prevention
-  ESO does not function as an intrusion detection or prevention system. It does not monitor or protect against unauthorized access within the Kubernetes cluster or the external secret systems.
+#### 2. Intrusion Detection or Prevention
+ESO does not function as an intrusion detection or prevention system. It does not monitor or protect against unauthorized access within the Kubernetes cluster or the external secret systems.
 
-  #### 3. Full Lifecycle Management of Secrets
-  The primary role of ESO is to synchronize secrets from external systems to Kubernetes. It does not manage the full lifecycle (like creation, rotation, and deletion) of secrets within the external systems.
+#### 3. Full Lifecycle Management of Secrets
+The primary role of ESO is to synchronize secrets from external systems to Kubernetes. It does not manage the full lifecycle (like creation, rotation, and deletion) of secrets within the external systems.
 
-  #### 4. Direct Security Auditing or Compliance Assurance
-  ESO does not perform security auditing or provide direct compliance assurance. It relies on the security and compliance features of the external secret management systems it integrates with.
+#### 4. Direct Security Auditing or Compliance Assurance
+ESO does not perform security auditing or provide direct compliance assurance. It relies on the security and compliance features of the external secret management systems it integrates with.
 
 ## Self-assessment use
 
@@ -117,7 +122,7 @@ This document serves to provide ESO users with an initial understanding of ESO's
 This document provides the CNCF TAG-Security with an initial understanding of ESO to assist in a joint-assessment, necessary for projects under incubation. Taken together, this document and the joint-assessment serve as a cornerstone for if and when ESO seeks graduation and is preparing for a security audit.
 
 
-## Security functions and features
+## Security Functions and Features
 
 ### Critical Components
 * Authentication and Authorization Interface: Connects with external secret management systems; ensures only authenticated and authorized access to secrets.
@@ -131,11 +136,11 @@ This document provides the CNCF TAG-Security with an initial understanding of ES
 
 ### [Threat Modeling with STRIDE](#external-secrets-operator-threat-modeling)
 
-## Project compliance
+## Project Compliance
 
 * Compliance - No specific compliance certifications or adherence to standards like PCI-DSS, COBIT, ISO, or GDPR have been documented. 
 
-## Secure development practices
+## Secure Development Practices
 
 ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best practices badge
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/5947/badge)](https://www.bestpractices.dev/projects/5947). The project is working on receiving a silver badge and is in the process of meeting the criteria for it.
@@ -177,10 +182,10 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
     * [Twitter](https://twitter.com/ExtSecretsOptr)
 
 ### Ecosystem
-* ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). We can expect the services that used kubernetes-external-secrets to migrate to ESO.
+* ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). It can be expected that the services that used kubernetes-external-secrets will migrate to ESO in the future.
 * ESO also maintains an official list of its [Adopters](https://github.com/external-secrets/external-secrets/blob/main/ADOPTERS.md). 
 
-## Security issue resolution
+## Security Issue Resolution
 ESO's security policy can be found in [SECURITY.md](https://github.com/external-secrets/external-secrets/blob/main/SECURITY.md).
 
 ### Responsible Disclosures Process
@@ -204,16 +209,24 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 * ESO tracks all bugs and issues publicly at external-secrets [Github Issues](https://github.com/external-secrets/external-secrets/issues).
 * No major vulnerability has been documented or disclosed to the public.
 
-### [CII Best Practices](https://www.coreinfrastructure.org/programs/best-practices-program/)
+### [CII Best Practices](https://www.bestpractices.dev/en/projects)
 *  ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best practices badge [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/5947/badge)](https://www.bestpractices.dev/projects/5947). The project is working on receiving a silver badge and is in the process of meeting the criteria for it.
 
 ### Case Studies
+The project is still in sandbox and hasn’t recorded any specific case studies publicly. This data can be acquired from project maintainers during Part 2.
+
+ESO does provide a list of its official adopters in [Adopters.md](https://github.com/external-secrets/external-secrets/blob/main/ADOPTERS.md).
+
+A few general use cases are available below:
+
 * Use Case 1: Managing secrets for multiple environments
 
   A company has multiple environments for their applications, such as development, staging, and production. They use different credentials for each environment to access external resources, such as databases and cloud storage. ESO can be used to automatically synchronize these credentials to the appropriate Kubernetes secrets for each environment. This makes it easy to manage secrets and ensures that applications always have access to the correct credentials. 
+
 * Use Case 2: Rotating secrets for security
 
   It is important to rotate secrets regularly to prevent unauthorized access. However, manually rotating secrets can be time-consuming and error-prone. ESO can be used to automate the rotation of secrets. ESO can be configured to fetch secrets from an external source, such as AWS Secrets Manager or HashiCorp Vault, and then store them in Kubernetes secrets. ESO can also be configured to rotate secrets on a regular basis.
+  
 * Use Case 3: Accessing secrets from multiple sources
 
   A company may use multiple sources for their secrets, such as AWS Secrets Manager, HashiCorp Vault, and a custom secrets store. ESO can be used to access secrets from all of these sources. ESO can be configured to use different secret providers for different types of secrets. For example, ESO could be configured to use AWS Secrets Manager for database credentials and HashiCorp Vault for API keys.
@@ -227,7 +240,7 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 
 ESO already has a threat-model documented at [threat-model](https://external-secrets.io/latest/guides/threat-model/).
 
-We're also providing our own threat modeling using STRIDE below:
+A seperate threat modeling using STRIDE is provided below:
 
 #### Spoofing
 
@@ -334,6 +347,3 @@ In this scenario, users or attackers exploit overly permissive or poorly configu
 * Implement and enforce strict RBAC policies, ensuring each role is granted only the minimum necessary permissions.
 * Regularly review and audit RBAC configurations to detect and correct any excess permissions, ensuring they align with the principle of least privilege.
 * Train administrators and users on the importance of secure role configuration and management.
-
-
-
