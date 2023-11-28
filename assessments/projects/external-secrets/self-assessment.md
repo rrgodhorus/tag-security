@@ -163,14 +163,18 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
 
 ### Communication Channels
 * Referenced in docs under [How to Get Involved](https://external-secrets.io/latest/#how-to-get-involved) and described below:
-  * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
-  * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
-  * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
-  * [Twitter](https://twitter.com/ExtSecretsOptr)
-* Relevant but not mentioned in the docs:
-  * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
-  * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
-* Technical Support policy detailed in [docs/stability-support](https://external-secrets.io/latest/introduction/stability-support/#technical-support)
+  * Internal:
+    * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
+    * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
+    * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
+    * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
+  * Inbound:
+    * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
+    * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
+    * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
+    * Contact Email: contact@external-secrets.io
+  * Outbound:
+    * [Twitter](https://twitter.com/ExtSecretsOptr)
 
 ### Ecosystem
 * ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). We can expect the services that used kubernetes-external-secrets to migrate to ESO.
