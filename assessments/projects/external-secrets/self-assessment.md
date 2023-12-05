@@ -38,7 +38,7 @@
 ## Overview
 External Secrets Operator (ESO) is a Kubernetes operator that integrates external secret management systems like AWS Secrets Manager, HashiCorp Vault, Google Secrets Manager, Azure Key Vault, IBM Cloud Secrets Manager, CyberArk Conjur and many more. The operator reads information from external APIs and automatically injects the values into a Kubernetes Secret.
 
-<p align="center"><img width="600" alt="image" src="docs/overview.png"></p>
+<p align="center"><img width="600" alt="image" src="assets/overview.png"></p>
 
 
 ### Background
@@ -56,7 +56,7 @@ The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely-
 * Integration and Communication: ESO uses the Kubernetes API to interact with the cluster, making use of client certificates for authentication or leveraging service account tokens for more granular control.
 * Employs custom resource definitions (CRDs) like ExternalSecret to define how external secrets should be fetched and synchronized.
 * Isolation: Kubernetes Role-Based Access Control (RBAC) limits potential lateral movement in case of a compromise.
-* For the External Secrets Operator (ESO), the key actors based on its architecture, which includes the Core Controller, the Cert Controller, and the Webhook, can be described as follows:
+* For the External Secrets Operator (ESO), the key actors based on its [architecture](https://external-secrets.io/latest/api/components/), which includes the Core Controller, the Cert Controller, and the Webhook, can be described as follows:
   * Core Controller: The Core Controller is the primary component of ESO. It watches for `ExternalSecret` objects in Kubernetes and acts upon changes to these objects. It is responsible for fetching the secrets from external secret management systems and synchronizing them with Kubernetes Secrets. 
   * Cert Controller: The Cert Controller is responsible for managing the TLS certificates that are used for secure communication within the Kubernetes cluster, particularly for the webhook service.
   * Webhook: The Webhook in ESO is used for various purposes, including mutating or validating `ExternalSecrets` and other related custom resources. It plays a critical role in ensuring the integrity and correctness of the `ExternalSecret` resources. 
@@ -68,9 +68,8 @@ The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely-
 * Storage and Encryption: Kubernetes Secrets are, by default, stored in etcd, a distributed key-value store. Starting from Kubernetes v1.13, etcd data can be encrypted at rest. Integration with external KMS (Key Management Service) for enhanced encryption management of Secrets.
 * Access Control:Secrets are often accessed via environment variables or volume mounts in Kubernetes pods, with access strictly controlled based on the pod's service account permissions.
 
-#### Isolation Mechanisms Overview
-* The isolation between these actors relies on network security, access control mechanisms, and the principle of least privilege.
-* This architecture ensures a limited scope of breach, even if one part is compromised.
+<p align="center"><img width="600" alt="image" src="assets/component-overview.png"></p>
+
 
 ### Actions
 The actions performed by ESO to synchronize secrets from external sources into Kubernetes can be outlined focusing on security checks, data handling, and interactions:
